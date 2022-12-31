@@ -1,19 +1,25 @@
 use leaf_nodes::{
     attributes::padding::Padding,
     nodes::{HStack, Label},
-    Style,
+    Leaf, Style,
 };
+use leafui::LeafUI;
 
 fn main() {
+    let leaf = app();
+    println!("{:#?}", leaf);
+
+    LeafUI::new(leaf).run();
+}
+
+fn app() -> impl Leaf {
     let style = Style::default()
         .with(Padding::All(2))
         .with(Padding::Left(5))
         .with(Padding::Right(0));
-    let node = HStack::new().style(style).children((
+
+    HStack::new().style(style).children((
         Label::new("Hello, World!"),
         Label::new("And hello again :)"),
-    ));
-    println!("{:#?}", node);
-
-    leaf_render::create_window();
+    ))
 }

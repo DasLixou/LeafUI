@@ -10,3 +10,4 @@ edition = "2021"
 [dependencies]
 leaf_nodes = { path = "crates/leaf_nodes" }
 leaf_render = { path = "crates/leaf_render" }
+winit = "0.27.5"
