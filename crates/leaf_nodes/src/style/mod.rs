@@ -3,7 +3,7 @@ use self::{attributes::StyleAttribute, data::padding::Padding};
 pub mod attributes;
 pub mod data;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub struct Style {
     pub padding: Padding,
 }

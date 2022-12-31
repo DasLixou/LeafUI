@@ -1,4 +1,4 @@
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub struct Padding {
     pub left: i32,
     pub right: i32,
