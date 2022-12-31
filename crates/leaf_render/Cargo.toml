@@ -1,0 +1,8 @@
+[package]
+name = "leaf_render"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+leaf_nodes = { path = "../leaf_nodes" }
+winit = "0.27.5"

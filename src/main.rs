@@ -14,4 +14,6 @@ fn main() {
         Label::new("And hello again :)"),
     ));
     println!("{:#?}", node);
+
+    leaf_render::create_window();
 }
