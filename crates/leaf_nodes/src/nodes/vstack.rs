@@ -1,4 +1,4 @@
-use crate::{Branch, Leaf, Style};
+use crate::{Branch, Leaf, RenderResult, Style};
 
 #[derive(Debug)]
 pub struct VStack(Style, Vec<Box<dyn Leaf>>);
@@ -19,4 +19,8 @@ impl VStack {
     }
 }
 
-impl Leaf for VStack {}
+impl Leaf for VStack {
+    fn render(&mut self) -> RenderResult {
+        RenderResult::ToDo
+    }
+}

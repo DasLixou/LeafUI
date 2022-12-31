@@ -1,4 +1,4 @@
-use crate::{Leaf, Style};
+use crate::{Leaf, RenderResult, Style};
 
 #[derive(Debug)]
 pub struct Label(String, Style);
@@ -14,4 +14,8 @@ impl Label {
     }
 }
 
-impl Leaf for Label {}
+impl Leaf for Label {
+    fn render(&mut self) -> RenderResult {
+        RenderResult::ToDo
+    }
+}

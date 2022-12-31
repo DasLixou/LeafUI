@@ -1,4 +1,4 @@
-use crate::{Branch, Leaf, Style};
+use crate::{Branch, Leaf, RenderResult, Style};
 
 #[derive(Debug)]
 pub struct HStack(Style, Vec<Box<dyn Leaf>>);
@@ -19,4 +19,8 @@ impl HStack {
     }
 }
 
-impl Leaf for HStack {}
+impl Leaf for HStack {
+    fn render(&mut self) -> RenderResult {
+        RenderResult::ToDo
+    }
+}
