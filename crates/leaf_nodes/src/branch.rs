@@ -1,15 +1,31 @@
 use crate::Leaf;
 
-pub trait Branch {}
+pub trait Branch {
+    fn resolve(self) -> Vec<Box<dyn Leaf>>;
+}
 
-impl Branch for () {}
+impl Branch for () {
+    fn resolve(self) -> Vec<Box<dyn Leaf>> {
+        vec![]
+    }
+}
 
-impl<D: Leaf> Branch for D {}
+impl<D: Leaf> Branch for D {
+    fn resolve(self) -> Vec<Box<dyn Leaf>> {
+        vec![Box::new(self)]
+    }
+}
 
 macro_rules! impl_branch {
     ( $(($generic:ident, $index:tt))+ ) => {
         impl<$($generic: Leaf),+> Branch for ($($generic,)+) {
-
+            fn resolve(self) -> Vec<Box<dyn Leaf>> {
+                let mut branch = Vec::<Box<dyn Leaf>>::new();
+                $(
+                    branch.push(Box::new(self.$index));
+                )+
+                branch
+            }
         }
     };
 }

@@ -1,5 +1,6 @@
 use crate::{Leaf, Style};
 
+#[derive(Debug)]
 pub struct Label(String, Style);
 
 impl Label {

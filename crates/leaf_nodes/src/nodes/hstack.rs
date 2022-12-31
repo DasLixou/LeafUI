@@ -1,10 +1,11 @@
 use crate::{Branch, Leaf, Style};
 
-pub struct HStack(Style, Box<dyn Branch>);
+#[derive(Debug)]
+pub struct HStack(Style, Vec<Box<dyn Leaf>>);
 
 impl HStack {
     pub fn new() -> Self {
-        HStack(Style::default(), Box::new(()))
+        HStack(Style::default(), vec![])
     }
 
     pub fn style(mut self, style: Style) -> Self {
@@ -12,8 +13,8 @@ impl HStack {
         self
     }
 
-    pub fn children(mut self, branch: Box<dyn Branch>) -> Self {
-        self.1 = branch;
+    pub fn children(mut self, branch: impl Branch) -> Self {
+        self.1.extend(branch.resolve());
         self
     }
 }

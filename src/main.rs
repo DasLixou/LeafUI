@@ -11,6 +11,6 @@ fn main() {
         .with(Padding::Right(0));
     let node = HStack::new()
         .style(style.clone())
-        .children(Box::new(Label::new("Hello, World!").style(style.clone())));
-    println!("{:?}", style);
+        .children(Label::new("Hello, World!").style(style.clone()));
+    println!("{:?}", node);
 }
