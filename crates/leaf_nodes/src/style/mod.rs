@@ -1,10 +1,11 @@
-use self::attributes::StyleAttribute;
+use self::{attributes::StyleAttribute, data::padding::Padding};
 
 pub mod attributes;
+pub mod data;
 
 #[derive(Default, Debug)]
 pub struct Style {
-    pub padding: [i32; 4],
+    pub padding: Padding,
 }
 
 impl Style {

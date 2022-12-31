@@ -16,27 +16,30 @@ impl StyleAttribute for Padding {
     fn apply(&self, style: &mut Style) {
         match *self {
             Padding::All(i) => {
-                style.padding = [i, i, i, i];
+                style.padding.left = i;
+                style.padding.right = i;
+                style.padding.top = i;
+                style.padding.bottom = i;
             }
             Padding::Horizontal(i) => {
-                style.padding[0] = i;
-                style.padding[2] = i;
+                style.padding.left = i;
+                style.padding.right = i;
             }
             Padding::Vertical(i) => {
-                style.padding[1] = i;
-                style.padding[3] = i;
+                style.padding.top = i;
+                style.padding.bottom = i;
             }
             Padding::Left(i) => {
-                style.padding[0] = i;
+                style.padding.left = i;
             }
             Padding::Right(i) => {
-                style.padding[1] = i;
+                style.padding.right = i;
             }
             Padding::Top(i) => {
-                style.padding[2] = i;
+                style.padding.top = i;
             }
             Padding::Bottom(i) => {
-                style.padding[3] = i;
+                style.padding.bottom = i;
             }
         }
     }
