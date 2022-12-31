@@ -9,11 +9,8 @@ pub struct Style {
 }
 
 impl Style {
-    pub fn of(style_attribs: &[Box<dyn StyleAttribute>]) -> Self {
-        let mut style = Self::default();
-        style_attribs
-            .iter()
-            .for_each(|attrib| attrib.apply(&mut style));
-        style
+    pub fn with(mut self, attrib: impl StyleAttribute) -> Self {
+        attrib.apply(&mut self);
+        self
     }
 }
