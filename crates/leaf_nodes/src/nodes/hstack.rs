@@ -14,7 +14,7 @@ impl HStack {
     }
 
     pub fn children(mut self, branch: impl Branch) -> Self {
-        self.1.extend(branch.resolve());
+        self.1 = branch.resolve();
         self
     }
 }

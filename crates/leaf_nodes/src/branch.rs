@@ -16,11 +16,17 @@ impl<D: Leaf> Branch for D {
     }
 }
 
+macro_rules! replace_expr {
+    ($_t:tt $sub:expr) => {
+        $sub
+    };
+}
+
 macro_rules! impl_branch {
     ( $(($generic:ident, $index:tt))+ ) => {
         impl<$($generic: Leaf),+> Branch for ($($generic,)+) {
             fn resolve(self) -> Vec<Box<dyn Leaf>> {
-                let mut branch = Vec::<Box<dyn Leaf>>::new();
+                let mut branch = Vec::<Box<dyn Leaf>>::with_capacity(<[()]>::len(&[$(replace_expr!(($generic) ())),*]));
                 $(
                     branch.push(Box::new(self.$index));
                 )+
