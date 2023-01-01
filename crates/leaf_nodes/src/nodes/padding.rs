@@ -2,7 +2,7 @@ use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
 pub struct Padding {
-    children: Vec<LeafID>,
+    child: LeafID,
     left: i32,
     right: i32,
     top: i32,
@@ -12,7 +12,7 @@ pub struct Padding {
 impl Padding {
     pub const fn new(left: i32, right: i32, top: i32, bottom: i32) -> Self {
         Padding {
-            children: vec![],
+            child: LeafID::UNKNOWN,
             left,
             right,
             top,
@@ -28,8 +28,8 @@ impl Padding {
         self
     }
 
-    pub fn add_child(mut self, child: LeafID) -> Self {
-        self.children.push(child);
+    pub fn set_child(mut self, child: LeafID) -> Self {
+        self.child = child;
         self
     }
 }

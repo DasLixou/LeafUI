@@ -14,7 +14,7 @@ struct Content;
 impl Leaf for Content {
     fn layout(&self, shrub: &mut Shrub) -> LeafID {
         Padding::new(5, 0, 2, 2)
-            .add_child(
+            .set_child(
                 VStack::new()
                     .add_child(Label::new("Hello, World!").create(shrub))
                     .add_child(Label::new("And hello again :)").create(shrub))
