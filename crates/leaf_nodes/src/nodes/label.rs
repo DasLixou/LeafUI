@@ -1,11 +1,13 @@
 use crate::Leaf;
 
 #[derive(Debug)]
-pub struct Label(String);
+pub struct Label {
+    text: String,
+}
 
 impl Label {
     pub fn new(text: impl Into<String>) -> Self {
-        Label(text.into())
+        Label { text: text.into() }
     }
 }
 

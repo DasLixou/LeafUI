@@ -10,7 +10,7 @@ pub struct Padding {
 }
 
 impl Padding {
-    pub fn new(left: i32, right: i32, top: i32, bottom: i32) -> Self {
+    pub const fn new(left: i32, right: i32, top: i32, bottom: i32) -> Self {
         Padding {
             children: vec![],
             left,
