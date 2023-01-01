@@ -1,7 +1,7 @@
 mod leaf;
 pub use leaf::*;
 
-mod branch;
-pub use branch::*;
+mod shrub;
+pub use shrub::*;
 
 pub mod nodes;

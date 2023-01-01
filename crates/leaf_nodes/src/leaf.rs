@@ -1,8 +1,13 @@
 use std::fmt::Debug;
 
-use downcast_rs::{impl_downcast, Downcast};
+use crate::{LeafID, Shrub};
 
-pub trait Leaf: Downcast + Debug {
-    fn layout(&mut self) -> Option<Box<dyn Leaf>>;
+pub trait Leaf: Debug {
+    fn new(cx: &mut Shrub) -> Self
+    where
+        Self: Sized;
+
+    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>>;
+
+    fn id(&self) -> LeafID;
 }
-impl_downcast!(Leaf);

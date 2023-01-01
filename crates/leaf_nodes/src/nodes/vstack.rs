@@ -1,23 +1,34 @@
-use crate::{Branch, Leaf};
+use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
 pub struct VStack {
-    children: Vec<Box<dyn Leaf>>,
+    children: Vec<LeafID>,
+    id: LeafID,
 }
 
 impl VStack {
-    pub const fn new() -> Self {
-        VStack { children: vec![] }
-    }
-
-    pub fn children(mut self, branch: impl Branch) -> Self {
-        self.children = branch.resolve();
+    pub fn add_child(mut self, child: LeafID) -> Self {
+        self.children.push(child);
         self
     }
 }
 
 impl Leaf for VStack {
-    fn layout(&mut self) -> Option<Box<dyn Leaf>> {
+    fn new(cx: &mut Shrub) -> Self
+    where
+        Self: Sized,
+    {
+        VStack {
+            children: vec![],
+            id: cx.register_leaf(),
+        }
+    }
+
+    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>> {
         None
+    }
+
+    fn id(&self) -> LeafID {
+        self.id
     }
 }
