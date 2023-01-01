@@ -1,7 +1,6 @@
 use leaf_nodes::{
-    attributes::padding::Padding,
-    nodes::{Label, VStack},
-    Leaf, RenderResult, Style,
+    nodes::{Label, Padding, VStack},
+    Leaf, RenderResult,
 };
 use leafui::LeafUI;
 
@@ -23,17 +22,11 @@ impl Content {
 
 impl Leaf for Content {
     fn render(&mut self) -> RenderResult {
-        VStack::new()
-            .style(
-                Style::default()
-                    .with(Padding::All(2))
-                    .with(Padding::Left(5))
-                    .with(Padding::Right(0)),
-            )
-            .children((
+        Padding::new(5, 0, 2, 2)
+            .children(VStack::new().children((
                 Label::new("Hello, World!"),
                 Label::new("And hello again :)"),
-            ))
+            )))
             .into()
     }
 }

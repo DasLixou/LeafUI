@@ -1,16 +1,11 @@
-use crate::{Leaf, RenderResult, Style};
+use crate::{Leaf, RenderResult};
 
 #[derive(Debug)]
-pub struct Label(String, Style);
+pub struct Label(String);
 
 impl Label {
     pub fn new(text: impl Into<String>) -> Self {
-        Label(text.into(), Style::default())
-    }
-
-    pub fn style(mut self, style: Style) -> Self {
-        self.1 = style;
-        self
+        Label(text.into())
     }
 }
 
