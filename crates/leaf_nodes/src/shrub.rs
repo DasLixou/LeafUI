@@ -9,6 +9,7 @@ impl LeafID {
     pub const UNKNOWN: LeafID = LeafID(0);
 }
 
+#[derive(Debug)]
 pub struct Shrub {
     counter: u64,
     leaves: HashMap<LeafID, Box<dyn Leaf>>,
