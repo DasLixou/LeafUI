@@ -25,7 +25,7 @@ impl Leaf for VStack {
     }
 
     fn layout(&self, cx: &mut Shrub) -> LeafID {
-        LeafID::Unknown
+        LeafID::UNKNOWN
     }
 
     fn id(&self) -> LeafID {
