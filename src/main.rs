@@ -1,5 +1,3 @@
-use std::process::id;
-
 use leaf_nodes::{
     nodes::{Label, Padding, VStack},
     Leaf, LeafID, Shrub,
@@ -7,10 +5,7 @@ use leaf_nodes::{
 use leafui::LeafUI;
 
 fn main() {
-    //let mut leaf = Content::new();
-    //println!("{:#?}", leaf.layout());
-
-    //LeafUI::new(leaf).run();
+    LeafUI::new::<Content>().run();
 }
 
 #[derive(Debug)]
