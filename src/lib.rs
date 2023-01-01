@@ -1,6 +1,13 @@
 mod window;
 
-use leaf_nodes::{Leaf, LeafID, Shrub};
+mod leaf;
+pub use leaf::*;
+
+mod shrub;
+pub use shrub::*;
+
+pub mod nodes;
+
 use window::Window;
 
 pub struct LeafUI {

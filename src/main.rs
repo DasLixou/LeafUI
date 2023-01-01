@@ -1,8 +1,7 @@
-use leaf_nodes::{
+use leafui::{
     nodes::{Label, Padding, VStack},
-    Leaf, LeafID, Shrub,
+    Leaf, LeafID, LeafUI, Shrub,
 };
-use leafui::LeafUI;
 
 fn main() {
     LeafUI::new(Content).run();
