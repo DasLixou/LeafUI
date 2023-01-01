@@ -3,11 +3,11 @@ use std::fmt::Debug;
 use crate::{LeafID, Shrub};
 
 pub trait Leaf: Debug {
-    fn new(cx: &mut Shrub) -> Self
+    fn new() -> Self
     where
         Self: Sized;
 
-    fn layout(&self, cx: &mut Shrub) -> LeafID;
+    fn layout(&self, shrub: &mut Shrub) -> LeafID;
 
-    fn id(&self) -> LeafID;
+    fn create(self, shrub: &mut Shrub) -> LeafID;
 }

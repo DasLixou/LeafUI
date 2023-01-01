@@ -3,7 +3,6 @@ use crate::{Leaf, LeafID, Shrub};
 #[derive(Debug)]
 pub struct VStack {
     children: Vec<LeafID>,
-    id: LeafID,
 }
 
 impl VStack {
@@ -14,21 +13,18 @@ impl VStack {
 }
 
 impl Leaf for VStack {
-    fn new(cx: &mut Shrub) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
-        VStack {
-            children: vec![],
-            id: cx.register_leaf(),
-        }
+        VStack { children: vec![] }
     }
 
-    fn layout(&self, cx: &mut Shrub) -> LeafID {
+    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 
-    fn id(&self) -> LeafID {
-        self.id
+    fn create(self, shrub: &mut Shrub) -> LeafID {
+        shrub.register_leaf(Box::new(self))
     }
 }

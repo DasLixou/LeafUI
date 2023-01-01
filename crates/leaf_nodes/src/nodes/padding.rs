@@ -3,7 +3,6 @@ use crate::{Leaf, LeafID, Shrub};
 #[derive(Debug)]
 pub struct Padding {
     children: Vec<LeafID>,
-    id: LeafID,
     left: i32,
     right: i32,
     top: i32,
@@ -26,13 +25,12 @@ impl Padding {
 }
 
 impl Leaf for Padding {
-    fn new(cx: &mut Shrub) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         Padding {
             children: vec![],
-            id: cx.register_leaf(),
             left: 0,
             right: 0,
             top: 0,
@@ -40,11 +38,11 @@ impl Leaf for Padding {
         }
     }
 
-    fn layout(&self, cx: &mut Shrub) -> LeafID {
+    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 
-    fn id(&self) -> LeafID {
-        self.id
+    fn create(self, shrub: &mut Shrub) -> LeafID {
+        shrub.register_leaf(Box::new(self))
     }
 }

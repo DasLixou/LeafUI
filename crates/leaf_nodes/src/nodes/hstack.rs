@@ -3,7 +3,6 @@ use crate::{Leaf, LeafID, Shrub};
 #[derive(Debug)]
 pub struct HStack {
     children: Vec<LeafID>,
-    id: LeafID,
 }
 
 impl HStack {
@@ -14,21 +13,18 @@ impl HStack {
 }
 
 impl Leaf for HStack {
-    fn new(cx: &mut Shrub) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
-        HStack {
-            children: vec![],
-            id: cx.register_leaf(),
-        }
+        HStack { children: vec![] }
     }
 
-    fn layout(&self, cx: &mut Shrub) -> LeafID {
+    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 
-    fn id(&self) -> crate::LeafID {
-        self.id
+    fn create(self, shrub: &mut Shrub) -> LeafID {
+        shrub.register_leaf(Box::new(self))
     }
 }

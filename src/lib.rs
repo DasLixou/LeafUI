@@ -12,13 +12,15 @@ pub struct LeafUI {
 impl LeafUI {
     pub fn new<L: Leaf>() -> Self {
         let mut shrub = Shrub::new();
-        let leaf = L::new(&mut shrub);
+        let leaf = L::new();
 
         println!("{:#?}", leaf.layout(&mut shrub));
 
+        let leaf = leaf.create(&mut shrub);
+
         LeafUI {
             shrub: shrub,
-            main_leaf: leaf.id(),
+            main_leaf: leaf,
             window: Window::new(),
         }
     }

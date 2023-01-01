@@ -2,7 +2,7 @@ use hashbrown::HashMap;
 
 use crate::Leaf;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
 pub struct LeafID(u64);
 
 impl LeafID {
@@ -22,8 +22,10 @@ impl Shrub {
         }
     }
 
-    pub fn register_leaf(&mut self) -> LeafID {
+    pub fn register_leaf(&mut self, leaf: Box<dyn Leaf>) -> LeafID {
         self.counter += 1;
-        LeafID(self.counter)
+        let id = LeafID(self.counter);
+        self.leaves.insert(id, leaf);
+        id
     }
 }

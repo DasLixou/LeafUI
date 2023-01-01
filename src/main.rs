@@ -9,29 +9,29 @@ fn main() {
 }
 
 #[derive(Debug)]
-struct Content(LeafID);
+struct Content;
 
 impl Leaf for Content {
-    fn new(cx: &mut leaf_nodes::Shrub) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
-        Self(cx.register_leaf())
+        Self
     }
 
-    fn layout(&self, cx: &mut Shrub) -> LeafID {
-        Padding::new(cx)
+    fn layout(&self, shrub: &mut Shrub) -> LeafID {
+        Padding::new()
             .padding(5, 0, 2, 2)
             .add_child(
-                VStack::new(cx)
-                    .add_child(Label::new(cx).text("Hello, World!").id())
-                    .add_child(Label::new(cx).text("And hello again :)").id())
-                    .id(),
+                VStack::new()
+                    .add_child(Label::new().text("Hello, World!").create(shrub))
+                    .add_child(Label::new().text("And hello again :)").create(shrub))
+                    .create(shrub),
             )
-            .id()
+            .create(shrub)
     }
 
-    fn id(&self) -> LeafID {
-        self.0
+    fn create(self, shrub: &mut Shrub) -> LeafID {
+        shrub.register_leaf(Box::new(self))
     }
 }
