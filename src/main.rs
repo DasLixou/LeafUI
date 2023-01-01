@@ -1,12 +1,12 @@
 use leaf_nodes::{
     nodes::{Label, Padding, VStack},
-    Leaf, RenderResult,
+    Leaf,
 };
 use leafui::LeafUI;
 
 fn main() {
     let mut leaf = Content::new();
-    println!("{:#?}", leaf.render());
+    println!("{:#?}", leaf.layout());
 
     LeafUI::new(leaf).run();
 }
@@ -21,12 +21,12 @@ impl Content {
 }
 
 impl Leaf for Content {
-    fn render(&mut self) -> RenderResult {
-        Padding::new(5, 0, 2, 2)
-            .children(VStack::new().children((
+    fn layout(&mut self) -> Option<Box<dyn Leaf>> {
+        Some(Box::new(Padding::new(5, 0, 2, 2).children(
+            VStack::new().children((
                 Label::new("Hello, World!"),
                 Label::new("And hello again :)"),
-            )))
-            .into()
+            )),
+        )))
     }
 }

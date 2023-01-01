@@ -1,4 +1,4 @@
-use crate::{Leaf, RenderResult};
+use crate::Leaf;
 
 #[derive(Debug)]
 pub struct Label(String);
@@ -10,7 +10,7 @@ impl Label {
 }
 
 impl Leaf for Label {
-    fn render(&mut self) -> RenderResult {
-        RenderResult::ToDo
+    fn layout(&mut self) -> Option<Box<dyn Leaf>> {
+        None
     }
 }
