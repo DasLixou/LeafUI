@@ -1,18 +1,29 @@
+use hashbrown::HashMap;
+
+use crate::Leaf;
+
 #[derive(Debug, Clone, Copy)]
 pub struct LeafID(u64);
 
 impl LeafID {
-    pub const Unknown: LeafID = LeafID(0);
+    pub const UNKNOWN: LeafID = LeafID(0);
 }
 
-pub struct Shrub;
+pub struct Shrub {
+    counter: u64,
+    leaves: HashMap<LeafID, Box<dyn Leaf>>,
+}
 
 impl Shrub {
     pub fn new() -> Self {
-        Self
+        Self {
+            counter: 0,
+            leaves: HashMap::new(),
+        }
     }
 
     pub fn register_leaf(&mut self) -> LeafID {
-        LeafID(1)
+        self.counter += 1;
+        LeafID(self.counter)
     }
 }
