@@ -6,6 +6,10 @@ pub struct HStack {
 }
 
 impl HStack {
+    pub const fn new() -> Self {
+        HStack { children: vec![] }
+    }
+
     pub fn add_child(mut self, child: LeafID) -> Self {
         self.children.push(child);
         self
@@ -13,13 +17,6 @@ impl HStack {
 }
 
 impl Leaf for HStack {
-    fn new() -> Self
-    where
-        Self: Sized,
-    {
-        HStack { children: vec![] }
-    }
-
     fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }

@@ -6,6 +6,10 @@ pub struct Label {
 }
 
 impl Label {
+    pub fn new(text: impl Into<String>) -> Self {
+        Label { text: text.into() }
+    }
+
     pub fn text(mut self, text: impl Into<String>) -> Self {
         self.text = text.into();
         self
@@ -13,15 +17,6 @@ impl Label {
 }
 
 impl Leaf for Label {
-    fn new() -> Self
-    where
-        Self: Sized,
-    {
-        Label {
-            text: String::new(),
-        }
-    }
-
     fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }

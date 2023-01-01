@@ -5,27 +5,19 @@ use leaf_nodes::{
 use leafui::LeafUI;
 
 fn main() {
-    LeafUI::new::<Content>().run();
+    LeafUI::new(Content).run();
 }
 
 #[derive(Debug)]
 struct Content;
 
 impl Leaf for Content {
-    fn new() -> Self
-    where
-        Self: Sized,
-    {
-        Self
-    }
-
     fn layout(&self, shrub: &mut Shrub) -> LeafID {
-        Padding::new()
-            .padding(5, 0, 2, 2)
+        Padding::new(5, 0, 2, 2)
             .add_child(
                 VStack::new()
-                    .add_child(Label::new().text("Hello, World!").create(shrub))
-                    .add_child(Label::new().text("And hello again :)").create(shrub))
+                    .add_child(Label::new("Hello, World!").create(shrub))
+                    .add_child(Label::new("And hello again :)").create(shrub))
                     .create(shrub),
             )
             .create(shrub)

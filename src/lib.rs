@@ -10,9 +10,8 @@ pub struct LeafUI {
 }
 
 impl LeafUI {
-    pub fn new<L: Leaf>() -> Self {
+    pub fn new(leaf: impl Leaf) -> Self {
         let mut shrub = Shrub::new();
-        let leaf = L::new();
 
         println!("{:#?}", leaf.layout(&mut shrub));
 

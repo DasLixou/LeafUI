@@ -10,6 +10,16 @@ pub struct Padding {
 }
 
 impl Padding {
+    pub const fn new(left: i32, right: i32, top: i32, bottom: i32) -> Self {
+        Padding {
+            children: vec![],
+            left,
+            right,
+            top,
+            bottom,
+        }
+    }
+
     pub const fn padding(mut self, left: i32, right: i32, top: i32, bottom: i32) -> Self {
         self.left = left;
         self.right = right;
@@ -25,19 +35,6 @@ impl Padding {
 }
 
 impl Leaf for Padding {
-    fn new() -> Self
-    where
-        Self: Sized,
-    {
-        Padding {
-            children: vec![],
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-        }
-    }
-
     fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }

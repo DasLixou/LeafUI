@@ -6,6 +6,10 @@ pub struct VStack {
 }
 
 impl VStack {
+    pub const fn new() -> Self {
+        VStack { children: vec![] }
+    }
+
     pub fn add_child(mut self, child: LeafID) -> Self {
         self.children.push(child);
         self
@@ -13,13 +17,6 @@ impl VStack {
 }
 
 impl Leaf for VStack {
-    fn new() -> Self
-    where
-        Self: Sized,
-    {
-        VStack { children: vec![] }
-    }
-
     fn layout(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
