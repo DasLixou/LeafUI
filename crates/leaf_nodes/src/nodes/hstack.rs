@@ -24,8 +24,8 @@ impl Leaf for HStack {
         }
     }
 
-    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>> {
-        None
+    fn layout(&self, cx: &mut Shrub) -> LeafID {
+        LeafID::Unknown
     }
 
     fn id(&self) -> crate::LeafID {

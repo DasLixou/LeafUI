@@ -40,8 +40,8 @@ impl Leaf for Padding {
         }
     }
 
-    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>> {
-        None
+    fn layout(&self, cx: &mut Shrub) -> LeafID {
+        LeafID::Unknown
     }
 
     fn id(&self) -> LeafID {

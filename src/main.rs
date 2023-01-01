@@ -19,15 +19,16 @@ impl Leaf for Content {
         Self(cx.register_leaf())
     }
 
-    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>> {
-        Some(Box::new(
-            Padding::new(cx).padding(5, 0, 2, 2).add_child(
+    fn layout(&self, cx: &mut Shrub) -> LeafID {
+        Padding::new(cx)
+            .padding(5, 0, 2, 2)
+            .add_child(
                 VStack::new(cx)
                     .add_child(Label::new(cx).text("Hello, World!").id())
                     .add_child(Label::new(cx).text("And hello again :)").id())
                     .id(),
-            ),
-        ))
+            )
+            .id()
     }
 
     fn id(&self) -> LeafID {

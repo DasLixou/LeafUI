@@ -7,7 +7,7 @@ pub trait Leaf: Debug {
     where
         Self: Sized;
 
-    fn layout(&self, cx: &mut Shrub) -> Option<Box<dyn Leaf>>;
+    fn layout(&self, cx: &mut Shrub) -> LeafID;
 
     fn id(&self) -> LeafID;
 }
