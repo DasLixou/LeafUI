@@ -23,8 +23,6 @@ impl Window {
 
     pub fn run(self) {
         self.event_loop.run(move |event, _, control_flow| {
-            println!("{:?}", event);
-
             control_flow.set_wait();
 
             match event {
