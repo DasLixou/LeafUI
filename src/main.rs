@@ -1,6 +1,6 @@
 use leafui::{
     nodes::{Label, Padding, VStack},
-    Leaf, LeafID, LeafUI, Shrub,
+    Leaf, LeafID, Shrub,
 };
 use taffy::{
     prelude::{Node, Rect},
@@ -9,7 +9,7 @@ use taffy::{
 };
 
 fn main() {
-    LeafUI::new(Content).run();
+    Shrub::new(Content).run();
 }
 
 #[derive(Debug)]

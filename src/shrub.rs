@@ -1,26 +1,39 @@
+use druid_shell::{Application, WindowBuilder};
 use hashbrown::HashMap;
 
-use crate::Leaf;
-
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq)]
-pub struct LeafID(u64);
-
-impl LeafID {
-    pub const UNKNOWN: LeafID = LeafID(0);
-}
+use crate::{window::Window, Leaf, LeafID};
 
 #[derive(Debug)]
 pub struct Shrub {
     counter: u64,
     leaves: HashMap<LeafID, Box<dyn Leaf>>,
+    main_leaf: LeafID,
 }
 
 impl Shrub {
-    pub fn new() -> Self {
+    pub fn new(main_leaf: impl Leaf) -> Self {
+        let counter = 1;
+        let id = LeafID(counter);
+        let mut leaves = HashMap::new();
+        leaves.insert(id, Box::new(main_leaf));
+
         Self {
-            counter: 0,
+            counter,
             leaves: HashMap::new(),
+            main_leaf: id,
         }
+    }
+
+    pub fn run(self) {
+        let app = Application::new().unwrap();
+        let mut builder = WindowBuilder::new(app.clone());
+        builder.set_handler(Box::<Window>::default());
+        builder.set_title("Hello example");
+
+        let window = builder.build().unwrap();
+        window.show();
+
+        app.run(None);
     }
 
     pub fn register_leaf(&mut self, leaf: Box<dyn Leaf>) -> LeafID {
