@@ -1,46 +1,39 @@
-use winit::{
-    event::{ElementState, Event, WindowEvent},
-    event_loop::EventLoop,
-    window::WindowBuilder,
+use std::any::Any;
+
+use druid_shell::{
+    kurbo::Size,
+    piet::{Color, Piet, RenderContext},
+    Region, WinHandler, WindowHandle,
 };
 
+#[derive(Default)]
 pub struct Window {
-    event_loop: EventLoop<()>,
-    window: winit::window::Window,
+    size: Size,
+    handle: WindowHandle,
 }
 
-impl Window {
-    pub fn new() -> Self {
-        let event_loop = EventLoop::new();
+const BG_COLOR: Color = Color::rgb8(0x27, 0x28, 0x22);
 
-        let window = WindowBuilder::new()
-            .with_title("A fantastic window!")
-            .build(&event_loop)
-            .unwrap();
-
-        Window { event_loop, window }
+impl WinHandler for Window {
+    fn connect(&mut self, handle: &WindowHandle) {
+        self.handle = handle.clone();
     }
 
-    pub fn run(self) {
-        self.event_loop.run(move |event, _, control_flow| {
-            control_flow.set_wait();
+    fn prepare_paint(&mut self) {}
 
-            match event {
-                Event::WindowEvent { event, .. } => match event {
-                    WindowEvent::CloseRequested => control_flow.set_exit(),
-                    WindowEvent::MouseInput {
-                        state: ElementState::Released,
-                        ..
-                    } => {
-                        self.window.request_redraw();
-                    }
-                    _ => (),
-                },
-                Event::RedrawRequested(_) => {
-                    println!("\nredrawing!\n");
-                }
-                _ => (),
-            }
-        });
+    fn paint(&mut self, piet: &mut Piet, _: &Region) {
+        piet.fill(self.size.to_rect(), &BG_COLOR);
+    }
+
+    fn size(&mut self, size: Size) {
+        self.size = size;
+    }
+
+    fn request_close(&mut self) {
+        self.handle.close();
+    }
+
+    fn as_any(&mut self) -> &mut dyn Any {
+        self
     }
 }

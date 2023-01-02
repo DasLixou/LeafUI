@@ -1,6 +1,7 @@
 mod window;
 
 mod leaf;
+use druid_shell::{Application, WindowBuilder};
 pub use leaf::*;
 
 mod shrub;
@@ -13,7 +14,6 @@ use window::Window;
 pub struct LeafUI {
     shrub: Shrub,
     main_leaf: LeafID,
-    window: Window,
 }
 
 impl LeafUI {
@@ -28,11 +28,18 @@ impl LeafUI {
         LeafUI {
             shrub: shrub,
             main_leaf: leaf,
-            window: Window::new(),
         }
     }
 
     pub fn run(self) {
-        self.window.run();
+        let app = Application::new().unwrap();
+        let mut builder = WindowBuilder::new(app.clone());
+        builder.set_handler(Box::<Window>::default());
+        builder.set_title("Hello example");
+
+        let window = builder.build().unwrap();
+        window.show();
+
+        app.run(None);
     }
 }
