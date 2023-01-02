@@ -1,30 +1,27 @@
+use taffy::{
+    prelude::{Node, Rect},
+    style::{Dimension, Style},
+    Taffy,
+};
+
 use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
 pub struct Padding {
     child: LeafID,
-    left: i32,
-    right: i32,
-    top: i32,
-    bottom: i32,
+    padding: Rect<Dimension>,
 }
 
 impl Padding {
-    pub const fn new(left: i32, right: i32, top: i32, bottom: i32) -> Self {
+    pub const fn new(padding: Rect<Dimension>) -> Self {
         Padding {
             child: LeafID::UNKNOWN,
-            left,
-            right,
-            top,
-            bottom,
+            padding,
         }
     }
 
-    pub const fn padding(mut self, left: i32, right: i32, top: i32, bottom: i32) -> Self {
-        self.left = left;
-        self.right = right;
-        self.top = top;
-        self.bottom = bottom;
+    pub const fn padding(mut self, padding: Rect<Dimension>) -> Self {
+        self.padding = padding;
         self
     }
 
@@ -35,7 +32,16 @@ impl Padding {
 }
 
 impl Leaf for Padding {
-    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
+    fn layout(&self, taffy: &mut Taffy) -> Node {
+        taffy
+            .new_leaf(Style {
+                padding: self.padding,
+                ..Default::default()
+            })
+            .unwrap()
+    }
+
+    fn design(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 

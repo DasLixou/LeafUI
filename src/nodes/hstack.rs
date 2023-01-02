@@ -1,3 +1,9 @@
+use taffy::{
+    prelude::Node,
+    style::{FlexDirection, Style},
+    Taffy,
+};
+
 use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
@@ -17,7 +23,16 @@ impl HStack {
 }
 
 impl Leaf for HStack {
-    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
+    fn layout(&self, taffy: &mut Taffy) -> Node {
+        taffy
+            .new_leaf(Style {
+                flex_direction: FlexDirection::Row,
+                ..Default::default()
+            })
+            .unwrap()
+    }
+
+    fn design(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 

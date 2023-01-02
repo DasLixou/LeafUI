@@ -1,3 +1,9 @@
+use taffy::{
+    prelude::Node,
+    style::{FlexDirection, Style},
+    Taffy,
+};
+
 use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
@@ -17,7 +23,16 @@ impl VStack {
 }
 
 impl Leaf for VStack {
-    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
+    fn layout(&self, taffy: &mut Taffy) -> Node {
+        taffy
+            .new_leaf(Style {
+                flex_direction: FlexDirection::Column,
+                ..Default::default()
+            })
+            .unwrap()
+    }
+
+    fn design(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 

@@ -20,7 +20,7 @@ impl LeafUI {
     pub fn new(leaf: impl Leaf) -> Self {
         let mut shrub = Shrub::new();
 
-        println!("{:?}", leaf.layout(&mut shrub));
+        println!("{:?}", leaf.design(&mut shrub));
         println!("{:#?}", shrub);
 
         let leaf = leaf.create(&mut shrub);

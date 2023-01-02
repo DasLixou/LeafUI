@@ -1,3 +1,5 @@
+use taffy::{prelude::Node, style::Style, Taffy};
+
 use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
@@ -17,7 +19,15 @@ impl Label {
 }
 
 impl Leaf for Label {
-    fn layout(&self, _shrub: &mut Shrub) -> LeafID {
+    fn layout(&self, taffy: &mut Taffy) -> Node {
+        taffy
+            .new_leaf(Style {
+                ..Default::default()
+            })
+            .unwrap()
+    }
+
+    fn design(&self, _shrub: &mut Shrub) -> LeafID {
         LeafID::UNKNOWN
     }
 

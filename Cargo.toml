@@ -6,3 +6,4 @@ edition = "2021"
 [dependencies]
 druid-shell = "0.7.0"
 hashbrown = "0.13.1"
+taffy = "0.2.2"
