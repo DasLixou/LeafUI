@@ -32,8 +32,8 @@ impl Leaf for VStack {
             .unwrap()
     }
 
-    fn design(&self, _shrub: &mut Shrub) -> LeafID {
-        LeafID::UNKNOWN
+    fn design(&self, _shrub: &mut Shrub) -> Option<LeafID> {
+        None
     }
 
     fn create(self, shrub: &mut Shrub) -> LeafID {

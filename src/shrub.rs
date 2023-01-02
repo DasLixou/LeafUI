@@ -1,30 +1,28 @@
 use druid_shell::{Application, WindowBuilder};
-use hashbrown::HashMap;
+use slotmap::SlotMap;
 
-use crate::{window::Window, Leaf, LeafID};
+use crate::{window::Window, Leaf};
+
+pub type LeafID = slotmap::DefaultKey;
 
 #[derive(Debug)]
 pub struct Shrub {
-    counter: u64,
-    leaves: HashMap<LeafID, Box<dyn Leaf>>,
-    main_leaf: LeafID,
+    leaves: SlotMap<LeafID, Box<dyn Leaf>>,
 }
 
 impl Shrub {
-    pub fn new(main_leaf: impl Leaf) -> Self {
-        let counter = 1;
-        let id = LeafID(counter);
-        let mut leaves = HashMap::new();
-        leaves.insert(id, Box::new(main_leaf));
-
+    pub fn new() -> Self {
         Self {
-            counter,
-            leaves: HashMap::new(),
-            main_leaf: id,
+            leaves: SlotMap::with_capacity_and_key(1),
         }
     }
 
-    pub fn run(self) {
+    pub fn run(mut self, leaf: impl Leaf) {
+        leaf.design(&mut self);
+        let leaf = leaf.create(&mut self);
+
+        println!("{:#?}", self.leaves);
+
         let app = Application::new().unwrap();
         let mut builder = WindowBuilder::new(app.clone());
         builder.set_handler(Box::<Window>::default());
@@ -36,10 +34,8 @@ impl Shrub {
         app.run(None);
     }
 
+    #[inline]
     pub fn register_leaf(&mut self, leaf: Box<dyn Leaf>) -> LeafID {
-        self.counter += 1;
-        let id = LeafID(self.counter);
-        self.leaves.insert(id, leaf);
-        id
+        self.leaves.insert(leaf)
     }
 }

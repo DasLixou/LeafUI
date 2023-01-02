@@ -8,14 +8,14 @@ use crate::{Leaf, LeafID, Shrub};
 
 #[derive(Debug)]
 pub struct Padding {
-    child: LeafID,
+    child: Option<LeafID>,
     padding: Rect<Dimension>,
 }
 
 impl Padding {
     pub const fn new(padding: Rect<Dimension>) -> Self {
         Padding {
-            child: LeafID::UNKNOWN,
+            child: None,
             padding,
         }
     }
@@ -26,7 +26,7 @@ impl Padding {
     }
 
     pub fn set_child(mut self, child: LeafID) -> Self {
-        self.child = child;
+        self.child = Some(child);
         self
     }
 }
@@ -41,8 +41,8 @@ impl Leaf for Padding {
             .unwrap()
     }
 
-    fn design(&self, _shrub: &mut Shrub) -> LeafID {
-        LeafID::UNKNOWN
+    fn design(&self, _shrub: &mut Shrub) -> Option<LeafID> {
+        None
     }
 
     fn create(self, shrub: &mut Shrub) -> LeafID {

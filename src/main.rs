@@ -9,7 +9,7 @@ use taffy::{
 };
 
 fn main() {
-    Shrub::new(Content).run();
+    Shrub::new().run(Content);
 }
 
 #[derive(Debug)]
@@ -20,15 +20,17 @@ impl Leaf for Content {
         taffy.new_leaf(Style::default()).unwrap()
     }
 
-    fn design(&self, shrub: &mut Shrub) -> LeafID {
-        Padding::new(Rect::from_points(5., 0., 2., 2.))
-            .set_child(
-                VStack::new()
-                    .add_child(Label::new("Hello, World!").create(shrub))
-                    .add_child(Label::new("And hello again :)").create(shrub))
-                    .create(shrub),
-            )
-            .create(shrub)
+    fn design(&self, shrub: &mut Shrub) -> Option<LeafID> {
+        Some(
+            Padding::new(Rect::from_points(5., 0., 2., 2.))
+                .set_child(
+                    VStack::new()
+                        .add_child(Label::new("Hello, World!").create(shrub))
+                        .add_child(Label::new("And hello again :)").create(shrub))
+                        .create(shrub),
+                )
+                .create(shrub),
+        )
     }
 
     fn create(self, shrub: &mut Shrub) -> LeafID {
