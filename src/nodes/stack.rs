@@ -1,8 +1,8 @@
 #[derive(Debug)]
-pub struct VStack;
+pub struct Stack;
 
-impl VStack {
+impl Stack {
     pub const fn new() -> Self {
-        VStack
+        Stack
     }
 }
