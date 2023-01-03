@@ -1,27 +1,32 @@
 use druid_shell::{Application, WindowBuilder};
-use slotmap::SlotMap;
+use slotmap::{SecondaryMap, SlotMap};
 
-use crate::{window::Window, Leaf};
+use crate::window::Window;
 
-pub type LeafID = slotmap::DefaultKey;
+pub type Leaf = slotmap::DefaultKey;
 
 #[derive(Debug)]
 pub struct Shrub {
-    leaves: SlotMap<LeafID, Box<dyn Leaf>>,
+    leaves: SlotMap<Leaf, ()>,
+    children: SecondaryMap<Leaf, Vec<Leaf>>,
 }
 
 impl Shrub {
     pub fn new() -> Self {
         Self {
-            leaves: SlotMap::with_capacity_and_key(1),
+            leaves: SlotMap::with_capacity(1),
+            children: SecondaryMap::with_capacity(1),
         }
     }
 
-    pub fn run(mut self, leaf: impl Leaf) {
-        leaf.design(&mut self);
-        let leaf = leaf.create(&mut self);
+    pub fn new_leaf(&mut self, children: &[Leaf]) -> Leaf {
+        let leaf = self.leaves.insert(());
+        self.children.insert(leaf, Vec::from(children));
+        leaf
+    }
 
-        println!("{:#?}", self.leaves);
+    pub fn run(self, _leaf: Leaf) {
+        println!("{:#?}", self);
 
         let app = Application::new().unwrap();
         let mut builder = WindowBuilder::new(app.clone());
@@ -32,10 +37,5 @@ impl Shrub {
         window.show();
 
         app.run(None);
-    }
-
-    #[inline]
-    pub fn register_leaf(&mut self, leaf: Box<dyn Leaf>) -> LeafID {
-        self.leaves.insert(leaf)
     }
 }

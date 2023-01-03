@@ -1,18 +1,16 @@
-use leafui::{
-    nodes::{Label, Padding, VStack},
-    Leaf, LeafID, Shrub,
-};
-use taffy::{
-    prelude::{Node, Rect},
-    style::Style,
-    Taffy,
-};
+use leafui::Shrub;
 
 fn main() {
-    Shrub::new().run(Content);
+    let mut shrub = Shrub::new();
+
+    let child = shrub.new_leaf(&[]);
+
+    let main = shrub.new_leaf(&[child]);
+
+    shrub.run(main);
 }
 
-#[derive(Debug)]
+/*#[derive(Debug)]
 struct Content;
 
 impl Leaf for Content {
@@ -37,3 +35,4 @@ impl Leaf for Content {
         shrub.register_leaf(Box::new(self))
     }
 }
+*/
