@@ -1,6 +1,6 @@
 use taffy::prelude::Layout;
 
-use crate::{Blossom, Leaf, Shrub};
+use crate::Blossom;
 
 #[derive(Debug)]
 pub struct Label {
@@ -19,7 +19,7 @@ impl Label {
 }
 
 impl Blossom for Label {
-    fn render(&self, _shrub: &Shrub, layout: &Layout, _children: &[Leaf]) {
+    fn render(&self, layout: &Layout) {
         println!("Render Label: {layout:?}");
     }
 }

@@ -1,6 +1,6 @@
 use taffy::prelude::Layout;
 
-use crate::{Blossom, Leaf, Shrub};
+use crate::Blossom;
 
 #[derive(Debug)]
 pub struct Stack;
@@ -12,10 +12,7 @@ impl Stack {
 }
 
 impl Blossom for Stack {
-    fn render(&self, shrub: &Shrub, layout: &Layout, children: &[Leaf]) {
+    fn render(&self, layout: &Layout) {
         println!("Render Stack: {layout:?}");
-        for leaf in children {
-            shrub.render(*leaf);
-        }
     }
 }

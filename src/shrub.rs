@@ -56,8 +56,12 @@ impl Shrub {
     }
 
     pub fn render(&self, leaf: Leaf) {
-        let children = self.children[leaf].as_slice();
         let layout = self.layout.layout(leaf).unwrap();
-        self.leaves[leaf].render(self, layout, children);
+        self.leaves[leaf].render(layout);
+
+        let children = self.children[leaf].as_slice();
+        for leaf in children {
+            self.render(*leaf);
+        }
     }
 }
