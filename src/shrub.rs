@@ -1,4 +1,4 @@
-use druid_shell::{Application, WindowBuilder};
+use druid_shell::{piet::Piet, Application, WindowBuilder};
 use slotmap::{SecondaryMap, SlotMap, SparseSecondaryMap};
 use taffy::{
     error::TaffyError,
@@ -63,11 +63,13 @@ impl Shrub {
         })
         .unwrap();
 
-        self.render(leaf);
-
         let app = Application::new().unwrap();
         let mut builder = WindowBuilder::new(app.clone());
-        builder.set_handler(Box::<Window>::default());
+        builder.set_handler(Box::new(Window {
+            shrub: Some(self),
+            leaf: Some(leaf),
+            ..Default::default()
+        }));
         builder.set_title("Hello example");
 
         let window = builder.build().unwrap();
@@ -76,13 +78,13 @@ impl Shrub {
         app.run(None);
     }
 
-    pub fn render(&self, leaf: Leaf) {
+    pub fn render(&self, leaf: Leaf, piet: &mut Piet) {
         let layout = self.layout(leaf);
-        self.leaves[leaf].blossom.render(layout);
+        self.leaves[leaf].blossom.render(layout, piet);
 
         let children = self.children[leaf].as_slice();
         for leaf in children {
-            self.render(*leaf);
+            self.render(*leaf, piet);
         }
     }
 

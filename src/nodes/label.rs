@@ -1,3 +1,4 @@
+use druid_shell::piet::Piet;
 use taffy::{
     prelude::{Layout, Size},
     style::Style,
@@ -18,7 +19,7 @@ impl Blossom for Label {
         }
     }
 
-    fn render(&self, layout: &Layout) {
+    fn render(&self, layout: &Layout, _piet: &mut Piet) {
         println!("Render Label: {layout:?}");
     }
 }
