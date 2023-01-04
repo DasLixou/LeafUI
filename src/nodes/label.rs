@@ -1,4 +1,4 @@
-use crate::{Blossom, Leaf};
+use crate::{Blossom, Leaf, Shrub};
 
 #[derive(Debug)]
 pub struct Label {
@@ -17,7 +17,7 @@ impl Label {
 }
 
 impl Blossom for Label {
-    fn render(&self, _children: &[Leaf]) {
+    fn render(&self, _shrub: &Shrub, _children: &[Leaf]) {
         println!("Render Label");
     }
 }

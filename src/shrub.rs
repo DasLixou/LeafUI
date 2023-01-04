@@ -42,8 +42,8 @@ impl Shrub {
         app.run(None);
     }
 
-    fn render(&self, leaf: Leaf) {
+    pub fn render(&self, leaf: Leaf) {
         let children = self.children[leaf].as_slice();
-        self.leaves[leaf].render(children);
+        self.leaves[leaf].render(self, children);
     }
 }

@@ -1,4 +1,4 @@
-use crate::{Blossom, Leaf};
+use crate::{Blossom, Leaf, Shrub};
 
 #[derive(Debug)]
 pub struct Stack;
@@ -10,7 +10,10 @@ impl Stack {
 }
 
 impl Blossom for Stack {
-    fn render(&self, _children: &[Leaf]) {
+    fn render(&self, shrub: &Shrub, children: &[Leaf]) {
         println!("Render Stack");
+        for leaf in children {
+            shrub.render(*leaf);
+        }
     }
 }
