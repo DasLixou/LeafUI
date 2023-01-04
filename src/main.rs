@@ -4,7 +4,7 @@ use leafui::{
 };
 use taffy::{
     prelude::Size,
-    style::{FlexDirection, Style},
+    style::{AlignItems, FlexDirection, Style},
 };
 
 fn main() {
@@ -16,18 +16,28 @@ fn main() {
 }
 
 fn content(shrub: &mut Shrub) -> Leaf {
-    let text_style = Style {
-        size: Size::from_points(28., 88.),
-        ..Default::default()
-    };
-
-    let text = shrub.new_leaf(Label::new("Hello, World!"), text_style, &[]);
-    let second_text = shrub.new_leaf(Label::new("And hello again :)"), text_style, &[]);
+    let text = shrub.new_leaf(
+        Label::new("Hello, World!"),
+        Style {
+            size: Size::from_points(60., 28.),
+            ..Default::default()
+        },
+        &[],
+    );
+    let second_text = shrub.new_leaf(
+        Label::new("And hello again :)"),
+        Style {
+            size: Size::from_points(88., 28.),
+            ..Default::default()
+        },
+        &[],
+    );
 
     shrub.new_leaf(
         Stack::new(),
         Style {
             flex_direction: FlexDirection::Column,
+            align_items: AlignItems::Center,
             ..Default::default()
         },
         &[text, second_text],
