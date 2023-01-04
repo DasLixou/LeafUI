@@ -37,7 +37,9 @@ impl Shrub {
         }
     }
 
-    pub fn new_leaf(&mut self, blossom: impl Blossom, style: Style, children: &[Leaf]) -> Leaf {
+    pub fn new_leaf(&mut self, blossom: impl Blossom, children: &[Leaf]) -> Leaf {
+        let style = blossom.style();
+
         let leaf = self.leaves.insert(LeafData {
             blossom: Box::new(blossom),
         });
