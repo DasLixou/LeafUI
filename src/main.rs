@@ -1,11 +1,12 @@
 use leafui::Shrub;
+use taffy::style::Style;
 
 fn main() {
     let mut shrub = Shrub::new();
 
-    let child = shrub.new_leaf(&[]);
+    let child = shrub.new_leaf(Style::default(), &[]);
 
-    let main = shrub.new_leaf(&[child]);
+    let main = shrub.new_leaf(Style::default(), &[child]);
 
     shrub.run(main);
 }
