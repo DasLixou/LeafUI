@@ -2,7 +2,10 @@ use leafui::{
     nodes::{Label, Stack},
     Leaf, Shrub,
 };
-use taffy::style::{FlexDirection, Style};
+use taffy::{
+    prelude::Size,
+    style::{FlexDirection, Style},
+};
 
 fn main() {
     let mut shrub = Shrub::new();
@@ -13,8 +16,13 @@ fn main() {
 }
 
 fn content(shrub: &mut Shrub) -> Leaf {
-    let text = shrub.new_leaf(Label::new("Hello, World!"), Style::default(), &[]);
-    let second_text = shrub.new_leaf(Label::new("And hello again :)"), Style::default(), &[]);
+    let text_style = Style {
+        size: Size::from_points(28., 88.),
+        ..Default::default()
+    };
+
+    let text = shrub.new_leaf(Label::new("Hello, World!"), text_style, &[]);
+    let second_text = shrub.new_leaf(Label::new("And hello again :)"), text_style, &[]);
 
     shrub.new_leaf(
         Stack::new(),

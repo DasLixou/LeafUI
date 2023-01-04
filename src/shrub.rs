@@ -1,6 +1,10 @@
 use druid_shell::{Application, WindowBuilder};
 use slotmap::{SecondaryMap, SlotMap};
-use taffy::{style::Style, Taffy};
+use taffy::{
+    prelude::{AvailableSpace, Size},
+    style::Style,
+    Taffy,
+};
 
 use crate::{window::Window, Blossom};
 
@@ -23,12 +27,21 @@ impl Shrub {
 
     pub fn new_leaf(&mut self, blossom: impl Blossom, style: Style, children: &[Leaf]) -> Leaf {
         let leaf = self.leaves.insert(Box::new(blossom));
-        let _ = self.layout.new_leaf(style);
+        let _ = self.layout.new_with_children(style, children);
         self.children.insert(leaf, Vec::from(children));
         leaf
     }
 
-    pub fn run(self, leaf: Leaf) {
+    pub fn run(mut self, leaf: Leaf) {
+        self.layout
+            .compute_layout(leaf, {
+                Size {
+                    width: AvailableSpace::Definite(1280.),
+                    height: AvailableSpace::Definite(720.),
+                }
+            })
+            .unwrap();
+
         self.render(leaf);
 
         let app = Application::new().unwrap();
@@ -44,6 +57,7 @@ impl Shrub {
 
     pub fn render(&self, leaf: Leaf) {
         let children = self.children[leaf].as_slice();
-        self.leaves[leaf].render(self, children);
+        let layout = self.layout.layout(leaf).unwrap();
+        self.leaves[leaf].render(self, layout, children);
     }
 }

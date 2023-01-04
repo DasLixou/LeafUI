@@ -1,3 +1,5 @@
+use taffy::prelude::Layout;
+
 use crate::{Blossom, Leaf, Shrub};
 
 #[derive(Debug)]
@@ -17,7 +19,7 @@ impl Label {
 }
 
 impl Blossom for Label {
-    fn render(&self, _shrub: &Shrub, _children: &[Leaf]) {
-        println!("Render Label");
+    fn render(&self, _shrub: &Shrub, layout: &Layout, _children: &[Leaf]) {
+        println!("Render Label: {layout:?}");
     }
 }
