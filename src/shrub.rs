@@ -10,8 +10,12 @@ use crate::{window::Window, Blossom};
 
 pub type Leaf = slotmap::DefaultKey;
 
+struct LeafData {
+    blossom: Box<dyn Blossom>,
+}
+
 pub struct Shrub {
-    leaves: SlotMap<Leaf, Box<dyn Blossom>>,
+    leaves: SlotMap<Leaf, LeafData>,
     children: SecondaryMap<Leaf, Vec<Leaf>>,
     layout: Taffy,
 }
@@ -26,7 +30,9 @@ impl Shrub {
     }
 
     pub fn new_leaf(&mut self, blossom: impl Blossom, style: Style, children: &[Leaf]) -> Leaf {
-        let leaf = self.leaves.insert(Box::new(blossom));
+        let leaf = self.leaves.insert(LeafData {
+            blossom: Box::new(blossom),
+        });
         let _ = self.layout.new_with_children(style, children);
         self.children.insert(leaf, Vec::from(children));
         leaf
@@ -57,7 +63,7 @@ impl Shrub {
 
     pub fn render(&self, leaf: Leaf) {
         let layout = self.layout.layout(leaf).unwrap();
-        self.leaves[leaf].render(layout);
+        self.leaves[leaf].blossom.render(layout);
 
         let children = self.children[leaf].as_slice();
         for leaf in children {
