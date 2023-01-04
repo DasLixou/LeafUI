@@ -2,12 +2,12 @@ use druid_shell::{Application, WindowBuilder};
 use slotmap::{SecondaryMap, SlotMap};
 use taffy::{style::Style, Taffy};
 
-use crate::window::Window;
+use crate::{window::Window, Blossom};
 
 pub type Leaf = slotmap::DefaultKey;
 
 pub struct Shrub {
-    leaves: SlotMap<Leaf, ()>,
+    leaves: SlotMap<Leaf, Box<dyn Blossom>>,
     children: SecondaryMap<Leaf, Vec<Leaf>>,
     layout: Taffy,
 }
@@ -21,14 +21,16 @@ impl Shrub {
         }
     }
 
-    pub fn new_leaf(&mut self, style: Style, children: &[Leaf]) -> Leaf {
-        let leaf = self.leaves.insert(());
+    pub fn new_leaf(&mut self, blossom: impl Blossom, style: Style, children: &[Leaf]) -> Leaf {
+        let leaf = self.leaves.insert(Box::new(blossom));
         let _ = self.layout.new_leaf(style);
         self.children.insert(leaf, Vec::from(children));
         leaf
     }
 
-    pub fn run(self, _leaf: Leaf) {
+    pub fn run(self, leaf: Leaf) {
+        self.render(leaf);
+
         let app = Application::new().unwrap();
         let mut builder = WindowBuilder::new(app.clone());
         builder.set_handler(Box::<Window>::default());
@@ -38,5 +40,10 @@ impl Shrub {
         window.show();
 
         app.run(None);
+    }
+
+    fn render(&self, leaf: Leaf) {
+        let children = self.children[leaf].as_slice();
+        self.leaves[leaf].render(children);
     }
 }
