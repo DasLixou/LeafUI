@@ -1,4 +1,3 @@
-use druid_shell::{Application, WindowBuilder};
 use slotmap::{SecondaryMap, SlotMap, SparseSecondaryMap};
 use taffy::{
     error::TaffyError,
@@ -8,8 +7,13 @@ use taffy::{
     style::Style,
     tree::LayoutTree,
 };
+use winit::{
+    event::{ElementState, Event, WindowEvent},
+    event_loop::EventLoop,
+    window::WindowBuilder,
+};
 
-use crate::{style_data::StyleData, window::Window, Blossom};
+use crate::{style_data::StyleData, Blossom};
 
 pub type Leaf = slotmap::DefaultKey;
 
@@ -65,15 +69,33 @@ impl Shrub {
 
         self.render(leaf);
 
-        let app = Application::new().unwrap();
-        let mut builder = WindowBuilder::new(app.clone());
-        builder.set_handler(Box::new(Window::default()));
-        builder.set_title("Hello example");
+        let event_loop = EventLoop::new();
 
-        let window = builder.build().unwrap();
-        window.show();
+        let window = WindowBuilder::new()
+            .with_title("LeafUI Example")
+            .build(&event_loop)
+            .unwrap();
 
-        app.run(None);
+        event_loop.run(move |event, _, control_flow| {
+            control_flow.set_wait();
+
+            match event {
+                Event::WindowEvent { event, .. } => match event {
+                    WindowEvent::CloseRequested => control_flow.set_exit(),
+                    WindowEvent::MouseInput {
+                        state: ElementState::Released,
+                        ..
+                    } => {
+                        window.request_redraw();
+                    }
+                    _ => (),
+                },
+                Event::RedrawRequested(_) => {
+                    println!("\nredrawing!\n");
+                }
+                _ => (),
+            }
+        });
     }
 
     pub fn render(&self, leaf: Leaf) {

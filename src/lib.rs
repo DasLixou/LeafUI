@@ -1,5 +1,3 @@
-mod window;
-
 mod shrub;
 pub use shrub::*;
 
