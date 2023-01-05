@@ -86,6 +86,29 @@ impl Shrub {
                     } => {
                         window.request_redraw();
                     }
+                    WindowEvent::Resized(new_inner_size) => {
+                        println!("calculate size (resized)");
+                        self.compute_layout(leaf, {
+                            Size {
+                                width: AvailableSpace::Definite(new_inner_size.width as f32),
+                                height: AvailableSpace::Definite(new_inner_size.height as f32),
+                            }
+                        })
+                        .unwrap();
+                    }
+                    WindowEvent::ScaleFactorChanged {
+                        scale_factor: _,
+                        new_inner_size,
+                    } => {
+                        println!("calculate size (factor changed)");
+                        self.compute_layout(leaf, {
+                            Size {
+                                width: AvailableSpace::Definite(new_inner_size.width as f32),
+                                height: AvailableSpace::Definite(new_inner_size.height as f32),
+                            }
+                        })
+                        .unwrap();
+                    }
                     _ => (),
                 },
                 Event::RedrawRequested(_) => {
