@@ -67,8 +67,6 @@ impl Shrub {
         })
         .unwrap();
 
-        self.render(leaf);
-
         let event_loop = EventLoop::new();
 
         let window = WindowBuilder::new()
@@ -92,6 +90,7 @@ impl Shrub {
                 },
                 Event::RedrawRequested(_) => {
                     println!("\nredrawing!\n");
+                    self.render(leaf);
                 }
                 _ => (),
             }
