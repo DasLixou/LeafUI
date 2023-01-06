@@ -1,5 +1,5 @@
 use leafui::{
-    nodes::{Label, Stack},
+    leaves::{Label, Stack},
     Leaf, Shrub,
 };
 use taffy::style::{AlignItems, FlexDirection};
