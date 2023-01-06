@@ -22,3 +22,15 @@ impl Blossom for Label {
         println!("Render Label: {layout:?}");
     }
 }
+
+impl Label {
+    pub const DEFAULT: Label = Label {
+        text: String::new(),
+    };
+}
+
+impl Default for Label {
+    fn default() -> Self {
+        Self::DEFAULT
+    }
+}
