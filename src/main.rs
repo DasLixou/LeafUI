@@ -1,4 +1,5 @@
 use leafui::{
+    default,
     leaves::{Label, Stack},
     Leaf, Shrub,
 };
@@ -30,7 +31,7 @@ fn content(shrub: &mut Shrub) -> Leaf {
         Stack {
             flex_direction: FlexDirection::Column,
             align_items: AlignItems::Center,
-            ..Stack::DEFAULT
+            ..default()
         },
         &[text, second_text],
     )

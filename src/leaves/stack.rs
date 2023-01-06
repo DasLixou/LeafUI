@@ -1,3 +1,4 @@
+use const_default::ConstDefault;
 use taffy::{
     prelude::{Layout, Rect},
     style::{AlignItems, Dimension, FlexDirection, Style},
@@ -27,16 +28,10 @@ impl Blossom for Stack {
     }
 }
 
-impl Stack {
-    pub const DEFAULT: Stack = Stack {
+impl ConstDefault for Stack {
+    const DEFAULT: Stack = Stack {
         flex_direction: Style::DEFAULT.flex_direction,
         align_items: Style::DEFAULT.align_items,
         padding: Style::DEFAULT.padding,
     };
-}
-
-impl Default for Stack {
-    fn default() -> Self {
-        Self::DEFAULT
-    }
 }

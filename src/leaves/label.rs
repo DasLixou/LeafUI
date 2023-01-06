@@ -1,3 +1,4 @@
+use const_default::ConstDefault;
 use taffy::{
     prelude::{Layout, Size},
     style::Style,
@@ -23,14 +24,8 @@ impl Blossom for Label {
     }
 }
 
-impl Label {
-    pub const DEFAULT: Label = Label {
+impl ConstDefault for Label {
+    const DEFAULT: Label = Label {
         text: String::new(),
     };
-}
-
-impl Default for Label {
-    fn default() -> Self {
-        Self::DEFAULT
-    }
 }
