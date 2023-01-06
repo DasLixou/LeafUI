@@ -32,12 +32,16 @@ pub struct Shrub {
 
 impl Shrub {
     pub fn new() -> Self {
+        Self::with_capacity(16)
+    }
+
+    pub fn with_capacity(capacity: usize) -> Self {
         Self {
-            leaves: SlotMap::with_capacity(1),
-            children: SecondaryMap::with_capacity(1),
-            parents: SecondaryMap::with_capacity(1),
-            styles: SecondaryMap::with_capacity(1),
-            measure_funcs: SparseSecondaryMap::with_capacity(1),
+            leaves: SlotMap::with_capacity(capacity),
+            children: SecondaryMap::with_capacity(capacity),
+            parents: SecondaryMap::with_capacity(capacity),
+            styles: SecondaryMap::with_capacity(capacity),
+            measure_funcs: SparseSecondaryMap::with_capacity(capacity),
         }
     }
 
