@@ -30,6 +30,7 @@ fn content(shrub: &mut Shrub) -> Leaf {
         Stack {
             flex_direction: FlexDirection::Column,
             align_items: AlignItems::Center,
+            ..Stack::DEFAULT
         },
         &[text, second_text],
     )
