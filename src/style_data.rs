@@ -6,10 +6,6 @@ pub(crate) struct StyleData {
     pub(crate) style: Style,
     /// The results of the layout computation
     pub(crate) layout: Layout,
-
-    /// Should we try and measure this node?
-    pub(crate) needs_measure: bool,
-
     /// The primary cached results of the layout computation
     pub(crate) size_cache: [Option<Cache>; 4],
 }
@@ -22,7 +18,6 @@ impl StyleData {
             style,
             size_cache: [None; 4],
             layout: Layout::new(),
-            needs_measure: false,
         }
     }
 

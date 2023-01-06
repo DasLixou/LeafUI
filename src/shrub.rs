@@ -1,8 +1,7 @@
-use slotmap::{SecondaryMap, SlotMap, SparseSecondaryMap};
+use slotmap::{SecondaryMap, SlotMap};
 use taffy::{
     error::TaffyError,
     layout::Cache,
-    node::MeasureFunc,
     prelude::{AvailableSpace, Layout, Size},
     style::Style,
     tree::LayoutTree,
@@ -26,8 +25,6 @@ pub struct Shrub {
     children: SecondaryMap<Leaf, Vec<Leaf>>,
     parents: SecondaryMap<Leaf, Option<Leaf>>,
     styles: SecondaryMap<Leaf, StyleData>,
-    /// The mapping from the Size<AvailableSpace> (in real units) to Size<f32> (in points) for this node
-    measure_funcs: SparseSecondaryMap<Leaf, MeasureFunc>,
 }
 
 impl Shrub {
@@ -41,7 +38,6 @@ impl Shrub {
             children: SecondaryMap::with_capacity(capacity),
             parents: SecondaryMap::with_capacity(capacity),
             styles: SecondaryMap::with_capacity(capacity),
-            measure_funcs: SparseSecondaryMap::with_capacity(capacity),
         }
     }
 
@@ -189,21 +185,15 @@ impl LayoutTree for Shrub {
 
     fn measure_node(
         &self,
-        node: Leaf,
-        known_dimensions: Size<Option<f32>>,
-        available_space: Size<AvailableSpace>,
+        _node: Leaf,
+        _known_dimensions: Size<Option<f32>>,
+        _available_space: Size<AvailableSpace>,
     ) -> Size<f32> {
-        match &self.measure_funcs[node] {
-            MeasureFunc::Raw(measure) => measure(known_dimensions, available_space),
-
-            MeasureFunc::Boxed(measure) => {
-                (measure as &dyn Fn(_, _) -> _)(known_dimensions, available_space)
-            }
-        }
+        Size::ZERO
     }
 
-    fn needs_measure(&self, node: Leaf) -> bool {
-        self.styles[node].needs_measure && self.measure_funcs.get(node).is_some()
+    fn needs_measure(&self, _node: Leaf) -> bool {
+        false
     }
 
     fn cache_mut(&mut self, node: Leaf, index: usize) -> &mut Option<Cache> {
