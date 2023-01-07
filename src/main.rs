@@ -1,9 +1,9 @@
 use leafui::{
     default,
     leaves::{Label, Stack},
+    taffy::style::{AlignItems, FlexDirection},
     Leaf, Shrub,
 };
-use taffy::style::{AlignItems, FlexDirection};
 
 fn main() {
     let mut shrub = Shrub::new();

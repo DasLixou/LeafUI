@@ -1,18 +1,21 @@
 use slotmap::{SecondaryMap, SlotMap};
-use taffy::{
-    error::TaffyError,
-    layout::Cache,
-    prelude::{AvailableSpace, Layout, Size},
-    style::Style,
-    tree::LayoutTree,
-};
 use winit::{
     event::{ElementState, Event, WindowEvent},
     event_loop::EventLoop,
     window::WindowBuilder,
 };
 
-use crate::{style_data::StyleData, Blossom};
+use crate::{
+    style_data::StyleData,
+    taffy::{
+        error::TaffyError,
+        layout::Cache,
+        prelude::{AvailableSpace, Layout, Size},
+        style::Style,
+        tree::LayoutTree,
+    },
+    Blossom,
+};
 
 pub type Leaf = slotmap::DefaultKey;
 

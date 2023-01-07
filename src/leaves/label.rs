@@ -1,10 +1,12 @@
 use const_default::ConstDefault;
-use taffy::{
-    prelude::{Layout, Size},
-    style::Style,
-};
 
-use crate::Blossom;
+use crate::{
+    taffy::{
+        prelude::{Layout, Size},
+        style::Style,
+    },
+    Blossom,
+};
 
 #[derive(Debug)]
 pub struct Label {
